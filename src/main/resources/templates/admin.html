@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1>Admin Page</h1>
+    <h2><a href="#" th:href="@{/user}">User Page</a></h2>
+    <button class="btn btn-outline-primary"><a href="#" th:href="@{/logout}">LOGOUT</a></button>
+    <br><br><br>
+    <div class="align-content-between"><button class="border  btn-light"><a href="#" th:href="@{/new}">Add New User</a></button></div>
+    <table class="table border">
+        <tr>
+            <th>User Id</th>
+            <th>User name</th>
+            <th>Password</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Configuration</th>
+        </tr>
+
+        <tr th:each="user: ${user}">
+            <td th:text="${user.id}"/>
+            <td th:text="${user.username}"/>
+            <td th:text="${user.password}"/>
+            <td th:text="${user.email}"/>
+            <td>
+                <div th:each="role: ${user.getRoles()}"><span th:text="${role.getName()}"></span></div>
+            </td>
+
+            <td>
+                <a href="#" th:href="@{/edit(id=${user.id})}">Edit</a>
+                <span class="ml-3"><a href="#" th:href="@{/delete(id=${user.id})}">Delete</a></span>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

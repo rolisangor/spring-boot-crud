@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New User</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+    <button class="btn btn-outline-primary"><a href="#" th:href="@{/logout}">LOGOUT</a></button>
+
+    <h1>New User Page</h1>
+    <form th:action="@{/save}" method="post" th:object="${user}">
+        <div class="form-row">
+            <label>UserName</label>
+            <input class="form-control" type="text" th:field="*{username}">
+
+            <label>Password</label>
+            <input class="form-control" type="password" th:field="*{password}">
+
+            <label>Email</label>
+            <input class="form-control" type="text" th:field="*{email}">
+
+            <legend>Roles:</legend>
+            <div th:each="role: ${role}">
+                <label>
+                    <input th:value="${role.getId()}" th:field="*{roles}" type="checkbox"/>
+                    <span th:text="${role.getName()}" th:remove="tag"></span>
+                </label>
+            </div>
+
+            <input type="submit">
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>

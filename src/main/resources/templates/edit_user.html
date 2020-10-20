@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit User</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<h1>Edit User</h1>
+<br>
+<div class="container">
+    <button class="btn btn-outline-primary"><a href="#" th:href="@{/logout}">LOGOUT</a></button>
+    <br><br>
+
+    <form th:action="@{/save}" method="post" th:object="${user}">
+        <div class="form-inline">
+            <label>Id</label>
+            <input type="text" disabled th:value="${user.getId()}">
+            <input type="hidden" th:value="${user.getId()}" th:field="*{id}">
+            <label>UserName</label>
+            <input class="form-control" type="text" th:value="${user.getUsername()}" th:field="*{username}">
+
+            <label>Password</label>
+            <input class="form-control" type="password" th:value="${user.getPassword()}" th:field="*{password}">
+
+            <label>Email</label>
+            <input class="form-control" type="text" th:value="${user.getEmail()}" th:field="*{email}">
+
+            <label>Roles:
+                <input type="checkbox" name="roles"
+                       th:each="role :${roleEdit}"
+                       th:text="${role.getName()}"
+                       th:value="${role.getId()}"
+                       th:field="*{roles}"/>
+            </label>
+
+            <input type="submit">
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
