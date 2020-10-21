@@ -1,31 +1,26 @@
 package crud.service;
 
 import crud.model.User;
+import crud.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.List;
 
 @Service
 public class UserDetailsServiceExtend implements UserDetailsService {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    private final UserRepository userRepo;
+
+    @Autowired
+    public UserDetailsServiceExtend(UserRepository userRepo) {
+        this.userRepo = userRepo;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        List<User> users = entityManager
-                .createQuery("SELECT u FROM User u JOIN FETCH u.roles")
-                .getResultList();
-
-        User user = users.stream()
-                        .filter(u -> u.getUsername()
-                        .equals(username))
-                        .findFirst()
-                        .orElseThrow();
+        User user = userRepo.findUserByUsername(username);
 
         if (user != null) {
             return user;
